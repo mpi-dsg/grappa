@@ -2,6 +2,14 @@
 
 Grappa is a distributed training system for graph neural networks that enables efficient **gradient-only communication** for scalable cross-partition training.
 
+## Note on Authorship
+
+This repository reflects the state used for internal development and submission.
+The underlying implementation of the Grappa system originates from [Chongyang Xu](https://github.com/chongyang-xu).
+Subsequent commits were performed to meet submission and reproducibility requirements.
+
+The actively maintained version is available at: https://github.com/chongyang-xu/grappa
+
 ## Citation
 
 ```bibtex
