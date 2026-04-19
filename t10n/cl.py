@@ -1,3 +1,8 @@
+#  Copyright (c) 2024-2026 by MPI-SWS, Germany
+#  All rights reserved.
+#
+#  Author: Chongyang Xu <cxu@mpi-sws.org>
+
 from t10n.util import timing, pprint, backtrace, pyml_handle
 
 import torch as th

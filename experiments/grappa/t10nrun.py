@@ -1,4 +1,8 @@
 #!/usr/bin/python3
+#  Copyright (c) 2024-2026 by MPI-SWS, Germany. All rights reserved.
+#
+#  Author: Chongyang Xu <cxu@mpi-sws.org>
+
 import argparse, os, socket
 
 from t10n.util import cluster_run, shell_or

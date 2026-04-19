@@ -1,3 +1,8 @@
+#!/usr/bin/python3
+#  Copyright (c) 2024-2026 by MPI-SWS, Germany. All rights reserved.
+#
+#  Author: Chongyang Xu <cxu@mpi-sws.org>
+
 import os
 import argparse
 import time

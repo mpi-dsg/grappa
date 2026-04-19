@@ -1,5 +1,8 @@
 /**
- *  Copyright (c) 2023-2024 by Data Systems Group, MPI-SWS
+ *  Copyright (c) 2023-2026 by MPI-SWS, Germany
+ *  All rights reserved.
+ *
+ *  Author: Chongyang Xu <cxu@mpi-sws.org>
  * @brief mmap a file as a data pointer
  */
 #ifndef CSRC_BASE_MMAP_FILE_H_

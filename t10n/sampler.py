@@ -1,3 +1,8 @@
+#  Copyright (c) 2024-2026 by MPI-SWS, Germany
+#  All rights reserved.
+#
+#  Author: Chongyang Xu <cxu@mpi-sws.org>
+
 from typing import Union, Optional
 
 from t10n._C.graph import Batch

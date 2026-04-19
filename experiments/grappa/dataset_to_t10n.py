@@ -1,3 +1,8 @@
+#!/usr/bin/python3
+#  Copyright (c) 2024-2026 by MPI-SWS, Germany. All rights reserved.
+#
+#  Author: Chongyang Xu <cxu@mpi-sws.org>
+
 from t10n.dataset.dgl_to_t10n import load_as_dgl_g
 from t10n.dataset.dgl_to_t10n import augmentation_dgl_g
 from t10n.dataset.dgl_to_t10n import to_t10n_from_dgl_g
