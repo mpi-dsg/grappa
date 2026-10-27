@@ -1,0 +1,55 @@
+From 9d6a2a66821f23ef314ed24884939cdba03d9ba4 Mon Sep 17 00:00:00 2001
+From: "a.b" <a.b@c.com>
+Date: Mon, 20 May 2024 09:20:41 +0000
+Subject: [PATCH 2/7] comm: fix compiling error
+
+---
+ comm/network.cpp | 4 ++--
+ comm/network.h   | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/comm/network.cpp b/comm/network.cpp
+index 431fa5e..eef13e5 100644
+--- a/comm/network.cpp
++++ b/comm/network.cpp
+@@ -221,7 +221,7 @@ void NtsGraphCommunicator::release_communicator() {
+  * @param et communication type, could be Master2Mirror or Mirror2Master
+  * @param dl device location. e.g. CPU_T
+  */
+-void NtsGraphCommunicator::init_layer_all(VertexId feature_size_, CommType et, DeviceLocation dl) {
++void NtsGraphCommunicator::init_layer_all(VertexId feature_size_, NtsCommType et, DeviceLocation dl) {
+   // allocating queue and resizing message buffer
+   init_communicator(feature_size_);
+   init_local_message_buffer();
+@@ -841,4 +841,4 @@ void NtsGraphCommunicator::flush_local_send_buffer_buffer(int t_i, int f_size) {
+             (size_of_msg(f_size)) * local_send_buffer[t_i]->count);
+   // clear local_send_buffer
+   local_send_buffer[t_i]->count = 0;
+-}
+\ No newline at end of file
++}
+diff --git a/comm/network.h b/comm/network.h
+index d1b5bbb..ed5ffb3 100644
+--- a/comm/network.h
++++ b/comm/network.h
+@@ -32,7 +32,7 @@ Copyright (c) 2021-2022 Qiange Wang, Northeastern University
+ #include <vector>
+ 
+ enum MessageTag { ShuffleGraph, PassMessage, GatherVertexArray };
+-enum CommType { Master2Mirror, Mirror2Master };
++enum NtsCommType { Master2Mirror, Mirror2Master };
+ 
+ template <typename MsgData> struct MsgUnit {
+   VertexId vertex;
+@@ -82,7 +82,7 @@ public:
+ 
+   void release_communicator();
+ 
+-  void init_layer_all(VertexId feature_size_, CommType et, DeviceLocation dl);
++  void init_layer_all(VertexId feature_size_, NtsCommType et, DeviceLocation dl);
+ 
+   void init_communicator(VertexId feature_size_);
+ 
+-- 
+2.34.1
+

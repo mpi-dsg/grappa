@@ -1,0 +1,11 @@
+eval `ssh-agent -s`
+ssh-add /root/id_rsa_root_test
+
+export SSH_PREFIX="ssh -o StrictHostKeyChecking=no"
+# ip of manager node for all swarm nodes
+export T10N_MANAGER_IP="139.19.171.52"
+
+# dataset
+export T10N_DATASET_PATH="/DS/dsg-graphs/nobackup/ds4gnn/DATA/"
+export T10N_MORE_DATA_PATH="/local/t10n/mnt/nfs_share/"
+export T10N_WORKSPACE_PATH="/DS/dsg-graphs/work/ds4gnn/WS/"

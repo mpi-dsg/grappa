@@ -1,0 +1,10 @@
+$WHICH_PYTHON -m torch.distributed.run \
+--nproc_per_node $PROC_PER_NODE --nnodes=$N_NODES --node_rank=$NODE_RANK \
+--master_addr $MASTER_ADDR --master_port $MASTER_PORT \
+build_chunks_dist.py      \
+--graph_name $GRAPH_NAME  \
+--dest_path $DEST_PATH    \
+--src_path_prefix $SRC_PREFIX    \
+--num_part $NUM_PART      \
+--tag_id $TAG_ID
+

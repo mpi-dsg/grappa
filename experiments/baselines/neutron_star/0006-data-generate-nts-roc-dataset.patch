@@ -1,0 +1,189 @@
+From 5f894e979b64f1a14b5d8ba8dd98c13bd3464fa7 Mon Sep 17 00:00:00 2001
+From: "a.b" <a.b@c.com>
+Date: Mon, 20 May 2024 09:42:11 +0000
+Subject: [PATCH 6/7] data: generate nts, roc dataset
+
+---
+ data/generate_nts_dataset.py | 122 +++++++++++++++++++++++++++++++----
+ 1 file changed, 111 insertions(+), 11 deletions(-)
+ mode change 100644 => 100755 data/generate_nts_dataset.py
+
+diff --git a/data/generate_nts_dataset.py b/data/generate_nts_dataset.py
+old mode 100644
+new mode 100755
+index f42d7fb..8bb4391
+--- a/data/generate_nts_dataset.py
++++ b/data/generate_nts_dataset.py
+@@ -22,9 +22,9 @@ def extract_dataset(args):
+     dataset = args.dataset
+ 
+     # change dir
+-    if not os.path.exists(dataset):
+-        os.mkdir(dataset)
+-    os.chdir(dataset)
++    #if not os.path.exists(dataset):
++    #    os.mkdir(dataset)
++    #os.chdir(dataset)
+ 
+     if dataset in ['cora', 'citeseer', 'pubmed', 'reddit']:
+         # load dataset
+@@ -104,7 +104,7 @@ def extract_dataset(args):
+     
+     elif dataset in ['ogbn-arxiv', 'ogbn-papers100M', 'ogbn-products']:
+         #load dataset
+-        data = DglNodePropPredDataset(name=dataset)
++        data = DglNodePropPredDataset(name=dataset, root="/data/ds_ori/")
+         
+         graph = data.graph[0]
+         labels = data.labels
+@@ -129,7 +129,7 @@ def extract_dataset(args):
+                 graph = dgl.to_bidirected(graph)
+             print('after add self loop has {} edges'.format(len(graph.all_edges()[0])))
+             print("insert self loop cost {:.2f}s".format(time.time() - time_stamp))
+-        
++
+         edges = graph.edges()
+         edge_src = edges[0].numpy().reshape((-1,1))
+         edge_dst = edges[1].numpy().reshape((-1,1))
+@@ -160,18 +160,37 @@ def split_dataset(num_nodes):
+ 
+ def generate_nts_dataset(args, edge_list, features, labels, train_mask, val_mask, test_mask):
+     dataset = args.dataset
+-    pre_path = os.getcwd() + '/' + dataset
++    #pre_path = os.getcwd() + '/' + dataset
++    pre_path = '/data/nts/'
++    os.makedirs(pre_path, exist_ok=True)
++    pre_path = pre_path + dataset
+ 
+     # edgelist
+-    # write_to_file(pre_path + '.edgelist', edge_list, "%d")
++    if args.dataset != 'ogbn-papers100M': 
++        write_to_file(pre_path + '.edgelist', edge_list, "%d")
++    else:
++        print(f"bypass edgelist: ogbn-papers100M")
+ 
+     # edge_list binary format (gemini)
+-    edge2bin(pre_path + '.edge', edge_list)
++    if args.dataset != 'ogbn-papers100M': 
++        edge2bin(pre_path + '.edge', edge_list)
++    else:
++        print(f"bypass edge2bin: ogbn-papers100M")
+ 
+     # fetures
+-    write_to_file(pre_path + '.feat', features, "%.4f", index=True)
++    if args.dataset != 'ogbn-papers100M': 
++        write_to_file(pre_path + '.feat', features, "%.4f", index=True)
++    else:
++        print(f"bypass features: ogbn-papers100M")
+ 
+     # label
++    if args.dataset != 'ogbn-papers100M': 
++        pass
++    else:
++        print(labels.dtype)
++        print(labels.shape)
++        labels = torch.ones(111059956, dtype=torch.float32)
++        print(f"labels: ogbn-papers100M")
+     write_to_file(pre_path + '.label', labels, "%d", index=True)
+ 
+     # mask
+@@ -241,12 +260,93 @@ def write_to_file(name, data, format, index=False):
+ #     print('after insert self loop', graph)    
+ #     return np.array(graph.edges)
+ 
++def roc_write_to_csv(file_path, data, format):
++    time_cost = time.time()
++    if not type(data) is np.ndarray:
++        data = data.numpy()
++    np.savetxt(file_path, data, delimiter=',', fmt=format)
++
++    time_cost = time.time() - time_cost
++    print("write to {} is done, cost: {:.2f}s Throughput:{:.2f}MB/s".format(file_path, time_cost, os.path.getsize(file_path)/1024/1024/time_cost))
++
++def roc_edge_to_flux_csc(file_path, num_nodes, edge_list):
++    nbr = []
++    for i in range(num_nodes):
++        nbr.append([])
++ 
++    time_cost = time.time()
++    for e in edge_list:
++        nbr[e[1]].append(e[0])
++
++    with open(file_path, 'wb') as f:
++        # nv
++        # ne
++        f.write(np.array(num_nodes, dtype=np.uint32).tobytes())
++        f.write(np.array(len(edge_list), dtype=np.uint64).tobytes())
++        # write c
++        c_idx = 0
++        #f.write(np.array(c_idx, dtype=np.uint64).tobytes())
++        for i in range(num_nodes):
++            c_idx += len(nbr[i])  # node i has idx of i-1
++            f.write(np.array(c_idx, dtype=np.uint64).tobytes())
++        # write neighbors
++        for i in range(num_nodes):
++            nbr[i].sort()
++            sl = nbr[i]
++            if sl is not None and len(sl) > 0:
++                f.write(np.array(sl, dtype=np.uint32).tobytes())
++
++#    a = np.fromfile(file_path, dtype=np.uint32)
++#    b = np.fromfile(file_path, dtype=np.uint64)
++#    print(f"{num_nodes}, {len(edge_list)}")
++#    print(f"{a}")
++#    print(f"{b}")
++    time_cost = time.time() - time_cost
++    print("write to {} is done, cost: {:.2f}s Throughput:{:.2f}MB/s".format(file_path, time_cost, os.path.getsize(file_path)/1024/1024/time_cost))
++
++
++def generate_roc_dataset(args, edge_list, features, labels, train_mask, val_mask, test_mask):
++    dataset = args.dataset
++    #pre_path = os.getcwd() + '/roc_' + dataset
++    pre_path = '/data/roc/'
++    os.makedirs(pre_path, exist_ok=True)
++    pre_path = pre_path + dataset
++
++    # edgelist
++    # write_to_file(pre_path + '.edgelist', edge_list, "%d")
++
++    # edge_list binary format (gemini)
++    # edge2bin(pre_path + '.edge', edge_list)
++    roc_edge_to_flux_csc(pre_path + '.add_self_edge.lux', len(labels), edge_list)
++    # fetures
++    roc_write_to_csv(pre_path + '.feats.csv', features, "%.4f")
++
++    # label
++    roc_write_to_csv(pre_path + '.label', labels, "%d")
++
++    # mask
++    mask_list = []
++    for i in range(len(labels)):
++        if train_mask[i] == True:
++            mask_list.append('Train')
++        elif val_mask[i] == True:
++            mask_list.append('Val')
++        elif test_mask[i] == True:
++            mask_list.append('Test')
++        else:
++            mask_list.append('None')
++    roc_write_to_csv(pre_path + '.mask', np.array(mask_list), "%s")
+ 
+ if __name__ == '__main__':
+     parser = argparse.ArgumentParser(description='Generate Dataset')
+     parser.add_argument("--dataset", type=str, default="cora", help="Dataset name (cora, citeseer, pubmed, reddit)")
+     parser.add_argument("--self-loop", type=bool, default=True, help="insert self-loop (default=True)")
++    parser.add_argument("--for-roc", type=bool, default=False, help="generate dataset for ROC (default=False)")
+     args = parser.parse_args()
+     print('args: ', args)
+-    edges_list, features, labels, train_mask, val_mask, test_mask = extract_dataset(args)
+-    generate_nts_dataset(args, edges_list, features, labels, train_mask, val_mask, test_mask)
+\ No newline at end of file
++    if args.for_roc:
++        edges_list, features, labels, train_mask, val_mask, test_mask = extract_dataset(args)
++        generate_roc_dataset(args, edges_list, features, labels, train_mask, val_mask, test_mask)
++    else:
++        edges_list, features, labels, train_mask, val_mask, test_mask = extract_dataset(args)
++        generate_nts_dataset(args, edges_list, features, labels, train_mask, val_mask, test_mask)
+-- 
+2.34.1
+

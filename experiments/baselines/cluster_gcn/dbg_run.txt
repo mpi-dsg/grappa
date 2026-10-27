@@ -1,0 +1,382 @@
+2024-10-31 15:07:33.895344: I tensorflow/core/util/port.cc:110] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2024-10-31 15:07:33.942787: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F AVX512_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2024-10-31 15:08:00.339874: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+WARNING:tensorflow:From /DS/venvs/work/cxu/mini3/envs/tf/lib/python3.10/site-packages/tensorflow/python/compat/v2_compat.py:107: disable_resource_variables (from tensorflow.python.ops.variable_scope) is deprecated and will be removed in a future version.
+Instructions for updating:
+non-resource variables are not supported in the long term
+INFO:tensorflow:Data loaded, 52.076846 seconds.
+I1031 15:24:54.464291 140321506309952 utils.py:386] Data loaded, 52.076846 seconds.
+2.13.1
+True
+[PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU'), PhysicalDevice(name='/physical_device:GPU:1', device_type='GPU')]
+__main__
+main started
+dataset: ogbpr
+t10n_load_dgl_g: started
+load_as_dgl_g: start ogbpr
+load_as_dgl_g: finish ogbpr
+Execution of load_as_dgl_g took 31.448301 seconds
+t10n_load_dgl_g: finished  31.45 seconds
+start mark label
+finish mark label
+finish train_edges
+start normalize
+time when normalize finished  34.51 seconds
+time when train_adj constructed  35.84 seconds
+time when full_adj constructed  52.05 seconds
+start partitioning ...
+
+metis partition done :   20.29 seconds
+  0%|          | 0/1500 [00:00<?, ?it/s]  3%|▎         | 40/1500 [00:00<00:08, 175.43it/s]100%|██████████| 1500/1500 [00:00<00:00, 6558.49it/s]
+INFO:tensorflow:Partitioning done. 37.223464 seconds.
+I1031 15:25:32.553117 140321506309952 partition_utils.py:78] Partitioning done. 37.223464 seconds.
+loop finished:  35.82 seconds
+[Time] partition_time:  37.990 seconds
+start partitioning ...
+
+metis partition done :   158.72 seconds
+  0%|          | 0/20 [00:00<?, ?it/s]100%|██████████| 20/20 [00:00<00:00, 484890.64it/s]
+INFO:tensorflow:Partitioning done. 424.271583 seconds.
+I1031 15:32:37.637295 140321506309952 partition_utils.py:78] Partitioning done. 424.271583 seconds.
+loop finished:  388.32 seconds
+start partitioning ...
+
+metis partition done :   79.79 seconds
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:00<00:00, 34663.67it/s]
+INFO:tensorflow:Partitioning done. 344.072374 seconds.
+I1031 15:38:46.964780 140321506309952 partition_utils.py:78] Partitioning done. 344.072374 seconds.
+2024-10-31 15:39:14.160515: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1639] Created device /device:GPU:0 with 42745 MB memory:  -> device: 0, name: NVIDIA A40, pci bus id: 0000:17:00.0, compute capability: 8.6
+2024-10-31 15:39:14.162340: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1639] Created device /device:GPU:1 with 42711 MB memory:  -> device: 1, name: NVIDIA A40, pci bus id: 0000:ca:00.0, compute capability: 8.6
+INFO:tensorflow:Number of GPUs available: 2
+I1031 15:39:14.162902 140321506309952 train.py:219] Number of GPUs available: 2
+WARNING:tensorflow:From /DS/venvs/work/cxu/mini3/envs/tf/lib/python3.10/site-packages/tensorflow/python/util/dispatch.py:1176: calling dropout (from tensorflow.python.ops.nn_ops) with keep_prob is deprecated and will be removed in a future version.
+Instructions for updating:
+Please use `rate` instead of `keep_prob`. Rate should be set to `rate = 1 - keep_prob`.
+W1031 15:39:14.198302 140321506309952 deprecation.py:569] From /DS/venvs/work/cxu/mini3/envs/tf/lib/python3.10/site-packages/tensorflow/python/util/dispatch.py:1176: calling dropout (from tensorflow.python.ops.nn_ops) with keep_prob is deprecated and will be removed in a future version.
+Instructions for updating:
+Please use `rate` instead of `keep_prob`. Rate should be set to `rate = 1 - keep_prob`.
+INFO:tensorflow:graphconvolution_1 shape = (?, 128)
+I1031 15:39:14.229329 140321506309952 models.py:77] graphconvolution_1 shape = (?, 128)
+INFO:tensorflow:graphconvolution_2 shape = (?, 47)
+I1031 15:39:14.234446 140321506309952 models.py:77] graphconvolution_2 shape = (?, 47)
+WARNING:tensorflow:From /DS/venvs/work/cxu/mini3/envs/tf/lib/python3.10/site-packages/tensorflow/python/util/dispatch.py:1176: softmax_cross_entropy_with_logits (from tensorflow.python.ops.nn_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+
+Future major versions of TensorFlow will allow gradients to flow
+into the labels input on backprop by default.
+
+See `tf.nn.softmax_cross_entropy_with_logits_v2`.
+
+W1031 15:39:14.237904 140321506309952 deprecation.py:364] From /DS/venvs/work/cxu/mini3/envs/tf/lib/python3.10/site-packages/tensorflow/python/util/dispatch.py:1176: softmax_cross_entropy_with_logits (from tensorflow.python.ops.nn_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+
+Future major versions of TensorFlow will allow gradients to flow
+into the labels input on backprop by default.
+
+See `tf.nn.softmax_cross_entropy_with_logits_v2`.
+
+INFO:tensorflow:graphconvolution_3 shape = (?, 128)
+I1031 15:39:14.467943 140321506309952 models.py:77] graphconvolution_3 shape = (?, 128)
+INFO:tensorflow:graphconvolution_4 shape = (?, 47)
+I1031 15:39:14.471848 140321506309952 models.py:77] graphconvolution_4 shape = (?, 47)
+2024-10-31 15:39:14.630976: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1639] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 42745 MB memory:  -> device: 0, name: NVIDIA A40, pci bus id: 0000:17:00.0, compute capability: 8.6
+2024-10-31 15:39:14.632277: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1639] Created device /job:localhost/replica:0/task:0/device:GPU:1 with 42711 MB memory:  -> device: 1, name: NVIDIA A40, pci bus id: 0000:ca:00.0, compute capability: 8.6
+2024-10-31 15:39:14.642426: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:375] MLIR V1 optimization pass is not enabled
+2024-10-31 15:39:19.734394: I tensorflow/compiler/xla/stream_executor/cuda/cuda_blas.cc:606] TensorFloat-32 will be used for the matrix multiplication. This will only be logged once.
+INFO:tensorflow:Epoch: 0001 training time: 5.66558 
+I1031 15:39:22.842886 140321506309952 train.py:394] Epoch: 0001 training time: 5.66558 
+INFO:tensorflow:Epoch: 0002 training time: 6.92861 
+I1031 15:39:24.106387 140321506309952 train.py:394] Epoch: 0002 training time: 6.92861 
+INFO:tensorflow:Epoch: 0003 training time: 8.15159 
+I1031 15:39:25.329808 140321506309952 train.py:394] Epoch: 0003 training time: 8.15159 
+INFO:tensorflow:Epoch: 0004 training time: 9.38295 
+I1031 15:39:26.561620 140321506309952 train.py:394] Epoch: 0004 training time: 9.38295 
+INFO:tensorflow:Epoch: 0005 training time: 10.59186 
+I1031 15:39:27.770975 140321506309952 train.py:394] Epoch: 0005 training time: 10.59186 
+INFO:tensorflow:Epoch: 0006 training time: 11.83288 
+I1031 15:39:29.012437 140321506309952 train.py:394] Epoch: 0006 training time: 11.83288 
+INFO:tensorflow:Epoch: 0007 training time: 13.03296 
+I1031 15:39:30.212930 140321506309952 train.py:394] Epoch: 0007 training time: 13.03296 
+INFO:tensorflow:Epoch: 0008 training time: 14.27392 
+I1031 15:39:31.454345 140321506309952 train.py:394] Epoch: 0008 training time: 14.27392 
+INFO:tensorflow:Epoch: 0009 training time: 15.49418 
+I1031 15:39:32.675040 140321506309952 train.py:394] Epoch: 0009 training time: 15.49418 
+INFO:tensorflow:Epoch: 0010 training time: 16.73627 
+I1031 15:39:33.917585 140321506309952 train.py:394] Epoch: 0010 training time: 16.73627 
+INFO:tensorflow:Epoch: 0011 training time: 17.95563 
+I1031 15:39:35.137396 140321506309952 train.py:394] Epoch: 0011 training time: 17.95563 
+INFO:tensorflow:Epoch: 0012 training time: 19.16902 
+I1031 15:39:36.351223 140321506309952 train.py:394] Epoch: 0012 training time: 19.16902 
+INFO:tensorflow:Epoch: 0013 training time: 20.36217 
+I1031 15:39:37.544773 140321506309952 train.py:394] Epoch: 0013 training time: 20.36217 
+INFO:tensorflow:Epoch: 0014 training time: 21.56226 
+I1031 15:39:38.745296 140321506309952 train.py:394] Epoch: 0014 training time: 21.56226 
+INFO:tensorflow:Epoch: 0015 training time: 22.78576 
+I1031 15:39:39.969270 140321506309952 train.py:394] Epoch: 0015 training time: 22.78576 
+INFO:tensorflow:Epoch: 0016 training time: 23.99805 
+I1031 15:39:41.181989 140321506309952 train.py:394] Epoch: 0016 training time: 23.99805 
+INFO:tensorflow:Epoch: 0017 training time: 25.20670 
+I1031 15:39:42.391042 140321506309952 train.py:394] Epoch: 0017 training time: 25.20670 
+INFO:tensorflow:Epoch: 0018 training time: 26.43064 
+I1031 15:39:43.615416 140321506309952 train.py:394] Epoch: 0018 training time: 26.43064 
+INFO:tensorflow:Epoch: 0019 training time: 27.64305 
+I1031 15:39:44.828281 140321506309952 train.py:394] Epoch: 0019 training time: 27.64305 
+INFO:tensorflow:Epoch: 0020 training time: 28.88087 
+I1031 15:39:46.066532 140321506309952 train.py:394] Epoch: 0020 training time: 28.88087 
+INFO:tensorflow:Epoch: 0021 training time: 30.11058 
+I1031 15:39:47.296668 140321506309952 train.py:394] Epoch: 0021 training time: 30.11058 
+INFO:tensorflow:Epoch: 0022 training time: 31.33224 
+I1031 15:39:48.518776 140321506309952 train.py:394] Epoch: 0022 training time: 31.33224 
+INFO:tensorflow:Epoch: 0023 training time: 32.53852 
+I1031 15:39:49.725528 140321506309952 train.py:394] Epoch: 0023 training time: 32.53852 
+INFO:tensorflow:Epoch: 0024 training time: 33.74864 
+I1031 15:39:50.936097 140321506309952 train.py:394] Epoch: 0024 training time: 33.74864 
+INFO:tensorflow:Epoch: 0025 training time: 34.97355 
+I1031 15:39:52.161455 140321506309952 train.py:394] Epoch: 0025 training time: 34.97355 
+INFO:tensorflow:Epoch: 0026 training time: 36.25540 
+I1031 15:39:53.443743 140321506309952 train.py:394] Epoch: 0026 training time: 36.25540 
+INFO:tensorflow:Epoch: 0027 training time: 37.45980 
+I1031 15:39:54.648561 140321506309952 train.py:394] Epoch: 0027 training time: 37.45980 
+INFO:tensorflow:Epoch: 0028 training time: 38.68382 
+I1031 15:39:55.873259 140321506309952 train.py:394] Epoch: 0028 training time: 38.68382 
+INFO:tensorflow:Epoch: 0029 training time: 39.91486 
+I1031 15:39:57.105319 140321506309952 train.py:394] Epoch: 0029 training time: 39.91486 
+INFO:tensorflow:Epoch: 0030 training time: 41.18921 
+I1031 15:39:58.380243 140321506309952 train.py:394] Epoch: 0030 training time: 41.18921 
+INFO:tensorflow:Epoch: 0031 training time: 42.43055 
+I1031 15:39:59.621988 140321506309952 train.py:394] Epoch: 0031 training time: 42.43055 
+INFO:tensorflow:Epoch: 0032 training time: 43.67918 
+I1031 15:40:00.871114 140321506309952 train.py:394] Epoch: 0032 training time: 43.67918 
+INFO:tensorflow:Epoch: 0033 training time: 44.96425 
+I1031 15:40:02.156631 140321506309952 train.py:394] Epoch: 0033 training time: 44.96425 
+INFO:tensorflow:Epoch: 0034 training time: 46.21029 
+I1031 15:40:03.403109 140321506309952 train.py:394] Epoch: 0034 training time: 46.21029 
+INFO:tensorflow:Epoch: 0035 training time: 47.43380 
+I1031 15:40:04.627058 140321506309952 train.py:394] Epoch: 0035 training time: 47.43380 
+INFO:tensorflow:Epoch: 0036 training time: 48.64712 
+I1031 15:40:05.840857 140321506309952 train.py:394] Epoch: 0036 training time: 48.64712 
+INFO:tensorflow:Epoch: 0037 training time: 49.85513 
+I1031 15:40:07.049329 140321506309952 train.py:394] Epoch: 0037 training time: 49.85513 
+INFO:tensorflow:Epoch: 0038 training time: 51.08633 
+I1031 15:40:08.280959 140321506309952 train.py:394] Epoch: 0038 training time: 51.08633 
+INFO:tensorflow:Epoch: 0039 training time: 52.34330 
+I1031 15:40:09.538572 140321506309952 train.py:394] Epoch: 0039 training time: 52.34330 
+INFO:tensorflow:Epoch: 0040 training time: 53.60697 
+I1031 15:40:10.803241 140321506309952 train.py:394] Epoch: 0040 training time: 53.60697 
+INFO:tensorflow:Epoch: 0041 training time: 54.86172 
+I1031 15:40:12.058568 140321506309952 train.py:394] Epoch: 0041 training time: 54.86172 
+INFO:tensorflow:Epoch: 0042 training time: 56.12517 
+I1031 15:40:13.322471 140321506309952 train.py:394] Epoch: 0042 training time: 56.12517 
+INFO:tensorflow:Epoch: 0043 training time: 57.43359 
+I1031 15:40:14.631295 140321506309952 train.py:394] Epoch: 0043 training time: 57.43359 
+INFO:tensorflow:Epoch: 0044 training time: 58.75816 
+I1031 15:40:15.956238 140321506309952 train.py:394] Epoch: 0044 training time: 58.75816 
+INFO:tensorflow:Epoch: 0045 training time: 59.98989 
+I1031 15:40:17.188343 140321506309952 train.py:394] Epoch: 0045 training time: 59.98989 
+INFO:tensorflow:Epoch: 0046 training time: 61.28254 
+I1031 15:40:18.481420 140321506309952 train.py:394] Epoch: 0046 training time: 61.28254 
+INFO:tensorflow:Epoch: 0047 training time: 62.53093 
+I1031 15:40:19.730204 140321506309952 train.py:394] Epoch: 0047 training time: 62.53093 
+INFO:tensorflow:Epoch: 0048 training time: 63.80578 
+I1031 15:40:21.005498 140321506309952 train.py:394] Epoch: 0048 training time: 63.80578 
+INFO:tensorflow:Epoch: 0049 training time: 65.03707 
+I1031 15:40:22.237227 140321506309952 train.py:394] Epoch: 0049 training time: 65.03707 
+INFO:tensorflow:Epoch: 0050 training time: 66.32852 
+I1031 15:40:23.529373 140321506309952 train.py:394] Epoch: 0050 training time: 66.32852 
+INFO:tensorflow:Epoch: 0051 training time: 67.56341 
+I1031 15:40:24.765374 140321506309952 train.py:394] Epoch: 0051 training time: 67.56341 
+INFO:tensorflow:Epoch: 0052 training time: 68.87578 
+I1031 15:40:26.078328 140321506309952 train.py:394] Epoch: 0052 training time: 68.87578 
+INFO:tensorflow:Epoch: 0053 training time: 70.13125 
+I1031 15:40:27.334243 140321506309952 train.py:394] Epoch: 0053 training time: 70.13125 
+INFO:tensorflow:Epoch: 0054 training time: 71.37866 
+I1031 15:40:28.582097 140321506309952 train.py:394] Epoch: 0054 training time: 71.37866 
+INFO:tensorflow:Epoch: 0055 training time: 72.59455 
+I1031 15:40:29.798423 140321506309952 train.py:394] Epoch: 0055 training time: 72.59455 
+INFO:tensorflow:Epoch: 0056 training time: 73.82686 
+I1031 15:40:31.031162 140321506309952 train.py:394] Epoch: 0056 training time: 73.82686 
+INFO:tensorflow:Epoch: 0057 training time: 75.05859 
+I1031 15:40:32.263304 140321506309952 train.py:394] Epoch: 0057 training time: 75.05859 
+INFO:tensorflow:Epoch: 0058 training time: 76.30705 
+I1031 15:40:33.512208 140321506309952 train.py:394] Epoch: 0058 training time: 76.30705 
+INFO:tensorflow:Epoch: 0059 training time: 77.52669 
+I1031 15:40:34.732294 140321506309952 train.py:394] Epoch: 0059 training time: 77.52669 
+INFO:tensorflow:Epoch: 0060 training time: 78.75723 
+I1031 15:40:35.963276 140321506309952 train.py:394] Epoch: 0060 training time: 78.75723 
+INFO:tensorflow:Epoch: 0061 training time: 79.98233 
+I1031 15:40:37.188807 140321506309952 train.py:394] Epoch: 0061 training time: 79.98233 
+INFO:tensorflow:Epoch: 0062 training time: 81.25418 
+I1031 15:40:38.461344 140321506309952 train.py:394] Epoch: 0062 training time: 81.25418 
+INFO:tensorflow:Epoch: 0063 training time: 82.47820 
+I1031 15:40:39.686224 140321506309952 train.py:394] Epoch: 0063 training time: 82.47820 
+INFO:tensorflow:Epoch: 0064 training time: 83.71992 
+I1031 15:40:40.928511 140321506309952 train.py:394] Epoch: 0064 training time: 83.71992 
+INFO:tensorflow:Epoch: 0065 training time: 84.98487 
+I1031 15:40:42.194032 140321506309952 train.py:394] Epoch: 0065 training time: 84.98487 
+INFO:tensorflow:Epoch: 0066 training time: 86.25411 
+I1031 15:40:43.463667 140321506309952 train.py:394] Epoch: 0066 training time: 86.25411 
+INFO:tensorflow:Epoch: 0067 training time: 87.47156 
+I1031 15:40:44.681548 140321506309952 train.py:394] Epoch: 0067 training time: 87.47156 
+INFO:tensorflow:Epoch: 0068 training time: 88.70898 
+I1031 15:40:45.919427 140321506309952 train.py:394] Epoch: 0068 training time: 88.70898 
+INFO:tensorflow:Epoch: 0069 training time: 89.93996 
+I1031 15:40:47.150846 140321506309952 train.py:394] Epoch: 0069 training time: 89.93996 
+INFO:tensorflow:Epoch: 0070 training time: 91.15713 
+I1031 15:40:48.368486 140321506309952 train.py:394] Epoch: 0070 training time: 91.15713 
+INFO:tensorflow:Epoch: 0071 training time: 92.37388 
+I1031 15:40:49.585683 140321506309952 train.py:394] Epoch: 0071 training time: 92.37388 
+INFO:tensorflow:Epoch: 0072 training time: 93.60045 
+I1031 15:40:50.812794 140321506309952 train.py:394] Epoch: 0072 training time: 93.60045 
+INFO:tensorflow:Epoch: 0073 training time: 94.80111 
+I1031 15:40:52.014311 140321506309952 train.py:394] Epoch: 0073 training time: 94.80111 
+INFO:tensorflow:Epoch: 0074 training time: 96.01357 
+I1031 15:40:53.227338 140321506309952 train.py:394] Epoch: 0074 training time: 96.01357 
+INFO:tensorflow:Epoch: 0075 training time: 97.24555 
+I1031 15:40:54.459849 140321506309952 train.py:394] Epoch: 0075 training time: 97.24555 
+INFO:tensorflow:Epoch: 0076 training time: 98.43788 
+I1031 15:40:55.652597 140321506309952 train.py:394] Epoch: 0076 training time: 98.43788 
+INFO:tensorflow:Epoch: 0077 training time: 99.62542 
+I1031 15:40:56.840574 140321506309952 train.py:394] Epoch: 0077 training time: 99.62542 
+INFO:tensorflow:Epoch: 0078 training time: 100.82322 
+I1031 15:40:58.038819 140321506309952 train.py:394] Epoch: 0078 training time: 100.82322 
+INFO:tensorflow:Epoch: 0079 training time: 102.02101 
+I1031 15:40:59.237020 140321506309952 train.py:394] Epoch: 0079 training time: 102.02101 
+INFO:tensorflow:Epoch: 0080 training time: 103.20934 
+I1031 15:41:00.425890 140321506309952 train.py:394] Epoch: 0080 training time: 103.20934 
+INFO:tensorflow:Epoch: 0081 training time: 104.40513 
+I1031 15:41:01.622107 140321506309952 train.py:394] Epoch: 0081 training time: 104.40513 
+INFO:tensorflow:Epoch: 0082 training time: 105.58086 
+I1031 15:41:02.798235 140321506309952 train.py:394] Epoch: 0082 training time: 105.58086 
+INFO:tensorflow:Epoch: 0083 training time: 106.79118 
+I1031 15:41:04.008977 140321506309952 train.py:394] Epoch: 0083 training time: 106.79118 
+INFO:tensorflow:Epoch: 0084 training time: 108.00091 
+I1031 15:41:05.219305 140321506309952 train.py:394] Epoch: 0084 training time: 108.00091 
+INFO:tensorflow:Epoch: 0085 training time: 109.23820 
+I1031 15:41:06.457482 140321506309952 train.py:394] Epoch: 0085 training time: 109.23820 
+INFO:tensorflow:Epoch: 0086 training time: 110.51827 
+I1031 15:41:07.738199 140321506309952 train.py:394] Epoch: 0086 training time: 110.51827 
+INFO:tensorflow:Epoch: 0087 training time: 111.77446 
+I1031 15:41:08.994817 140321506309952 train.py:394] Epoch: 0087 training time: 111.77446 
+INFO:tensorflow:Epoch: 0088 training time: 113.00720 
+I1031 15:41:10.227920 140321506309952 train.py:394] Epoch: 0088 training time: 113.00720 
+INFO:tensorflow:Epoch: 0089 training time: 114.23260 
+I1031 15:41:11.453683 140321506309952 train.py:394] Epoch: 0089 training time: 114.23260 
+INFO:tensorflow:Epoch: 0090 training time: 115.52626 
+I1031 15:41:12.747734 140321506309952 train.py:394] Epoch: 0090 training time: 115.52626 
+INFO:tensorflow:Epoch: 0091 training time: 116.77338 
+I1031 15:41:13.995305 140321506309952 train.py:394] Epoch: 0091 training time: 116.77338 
+INFO:tensorflow:Epoch: 0092 training time: 118.01523 
+I1031 15:41:15.237600 140321506309952 train.py:394] Epoch: 0092 training time: 118.01523 
+INFO:tensorflow:Epoch: 0093 training time: 119.23459 
+I1031 15:41:16.457432 140321506309952 train.py:394] Epoch: 0093 training time: 119.23459 
+INFO:tensorflow:Epoch: 0094 training time: 120.49617 
+I1031 15:41:17.719497 140321506309952 train.py:394] Epoch: 0094 training time: 120.49617 
+INFO:tensorflow:Epoch: 0095 training time: 121.71538 
+I1031 15:41:18.939216 140321506309952 train.py:394] Epoch: 0095 training time: 121.71538 
+INFO:tensorflow:Epoch: 0096 training time: 122.94178 
+I1031 15:41:20.166256 140321506309952 train.py:394] Epoch: 0096 training time: 122.94178 
+INFO:tensorflow:Epoch: 0097 training time: 124.21519 
+I1031 15:41:21.440284 140321506309952 train.py:394] Epoch: 0097 training time: 124.21519 
+INFO:tensorflow:Epoch: 0098 training time: 125.50494 
+I1031 15:41:22.730666 140321506309952 train.py:394] Epoch: 0098 training time: 125.50494 
+INFO:tensorflow:Epoch: 0099 training time: 126.78760 
+I1031 15:41:24.013776 140321506309952 train.py:394] Epoch: 0099 training time: 126.78760 
+INFO:tensorflow:Epoch: 0100 training time: 128.07817 
+I1031 15:41:25.304787 140321506309952 train.py:394] Epoch: 0100 training time: 128.07817 
+INFO:tensorflow:Epoch: 0101 training time: 129.35827 
+I1031 15:41:26.585349 140321506309952 train.py:394] Epoch: 0101 training time: 129.35827 
+INFO:tensorflow:Epoch: 0102 training time: 130.65837 
+I1031 15:41:27.885898 140321506309952 train.py:394] Epoch: 0102 training time: 130.65837 
+INFO:tensorflow:Epoch: 0103 training time: 131.92069 
+I1031 15:41:29.148619 140321506309952 train.py:394] Epoch: 0103 training time: 131.92069 
+INFO:tensorflow:Epoch: 0104 training time: 133.17781 
+I1031 15:41:30.406156 140321506309952 train.py:394] Epoch: 0104 training time: 133.17781 
+INFO:tensorflow:Epoch: 0105 training time: 134.43782 
+I1031 15:41:31.666609 140321506309952 train.py:394] Epoch: 0105 training time: 134.43782 
+INFO:tensorflow:Epoch: 0106 training time: 135.70581 
+I1031 15:41:32.935039 140321506309952 train.py:394] Epoch: 0106 training time: 135.70581 
+INFO:tensorflow:Epoch: 0107 training time: 136.96993 
+I1031 15:41:34.199611 140321506309952 train.py:394] Epoch: 0107 training time: 136.96993 
+INFO:tensorflow:Epoch: 0108 training time: 138.24903 
+I1031 15:41:35.479274 140321506309952 train.py:394] Epoch: 0108 training time: 138.24903 
+INFO:tensorflow:Epoch: 0109 training time: 139.50747 
+I1031 15:41:36.738507 140321506309952 train.py:394] Epoch: 0109 training time: 139.50747 
+INFO:tensorflow:Epoch: 0110 training time: 140.79881 
+I1031 15:41:38.030398 140321506309952 train.py:394] Epoch: 0110 training time: 140.79881 
+INFO:tensorflow:Epoch: 0111 training time: 142.06616 
+I1031 15:41:39.298273 140321506309952 train.py:394] Epoch: 0111 training time: 142.06616 
+INFO:tensorflow:Epoch: 0112 training time: 143.32657 
+I1031 15:41:40.559147 140321506309952 train.py:394] Epoch: 0112 training time: 143.32657 
+INFO:tensorflow:Epoch: 0113 training time: 144.58956 
+I1031 15:41:41.822610 140321506309952 train.py:394] Epoch: 0113 training time: 144.58956 
+INFO:tensorflow:Epoch: 0114 training time: 145.89296 
+I1031 15:41:43.126450 140321506309952 train.py:394] Epoch: 0114 training time: 145.89296 
+INFO:tensorflow:Epoch: 0115 training time: 147.20042 
+I1031 15:41:44.434353 140321506309952 train.py:394] Epoch: 0115 training time: 147.20042 
+INFO:tensorflow:Epoch: 0116 training time: 148.49718 
+I1031 15:41:45.731513 140321506309952 train.py:394] Epoch: 0116 training time: 148.49718 
+INFO:tensorflow:Epoch: 0117 training time: 149.77033 
+I1031 15:41:47.005124 140321506309952 train.py:394] Epoch: 0117 training time: 149.77033 
+INFO:tensorflow:Epoch: 0118 training time: 151.05719 
+I1031 15:41:48.292453 140321506309952 train.py:394] Epoch: 0118 training time: 151.05719 
+INFO:tensorflow:Epoch: 0119 training time: 152.33086 
+I1031 15:41:49.566565 140321506309952 train.py:394] Epoch: 0119 training time: 152.33086 
+INFO:tensorflow:Epoch: 0120 training time: 153.58908 
+I1031 15:41:50.825225 140321506309952 train.py:394] Epoch: 0120 training time: 153.58908 
+INFO:tensorflow:Epoch: 0121 training time: 154.77792 
+I1031 15:41:52.014517 140321506309952 train.py:394] Epoch: 0121 training time: 154.77792 
+INFO:tensorflow:Epoch: 0122 training time: 156.00180 
+I1031 15:41:53.238839 140321506309952 train.py:394] Epoch: 0122 training time: 156.00180 
+INFO:tensorflow:Epoch: 0123 training time: 157.21897 
+I1031 15:41:54.456590 140321506309952 train.py:394] Epoch: 0123 training time: 157.21897 
+INFO:tensorflow:Epoch: 0124 training time: 158.43500 
+I1031 15:41:55.673561 140321506309952 train.py:394] Epoch: 0124 training time: 158.43500 
+INFO:tensorflow:Epoch: 0125 training time: 159.72863 
+I1031 15:41:56.967793 140321506309952 train.py:394] Epoch: 0125 training time: 159.72863 
+INFO:tensorflow:Epoch: 0126 training time: 160.97910 
+I1031 15:41:58.218723 140321506309952 train.py:394] Epoch: 0126 training time: 160.97910 
+INFO:tensorflow:Epoch: 0127 training time: 162.25292 
+I1031 15:41:59.492981 140321506309952 train.py:394] Epoch: 0127 training time: 162.25292 
+INFO:tensorflow:Epoch: 0128 training time: 163.53732 
+I1031 15:42:00.777834 140321506309952 train.py:394] Epoch: 0128 training time: 163.53732 
+INFO:tensorflow:Epoch: 0129 training time: 164.81581 
+I1031 15:42:02.056715 140321506309952 train.py:394] Epoch: 0129 training time: 164.81581 
+INFO:tensorflow:Epoch: 0130 training time: 166.05398 
+I1031 15:42:03.295329 140321506309952 train.py:394] Epoch: 0130 training time: 166.05398 
+INFO:tensorflow:Epoch: 0131 training time: 167.27261 
+I1031 15:42:04.514389 140321506309952 train.py:394] Epoch: 0131 training time: 167.27261 
+INFO:tensorflow:Epoch: 0132 training time: 168.49862 
+I1031 15:42:05.740842 140321506309952 train.py:394] Epoch: 0132 training time: 168.49862 
+INFO:tensorflow:Epoch: 0133 training time: 169.70781 
+I1031 15:42:06.950481 140321506309952 train.py:394] Epoch: 0133 training time: 169.70781 
+INFO:tensorflow:Epoch: 0134 training time: 170.92270 
+I1031 15:42:08.165807 140321506309952 train.py:394] Epoch: 0134 training time: 170.92270 
+INFO:tensorflow:Epoch: 0135 training time: 172.12764 
+I1031 15:42:09.371186 140321506309952 train.py:394] Epoch: 0135 training time: 172.12764 
+INFO:tensorflow:Epoch: 0136 training time: 173.34134 
+I1031 15:42:10.585476 140321506309952 train.py:394] Epoch: 0136 training time: 173.34134 
+INFO:tensorflow:Epoch: 0137 training time: 174.54130 
+I1031 15:42:11.786285 140321506309952 train.py:394] Epoch: 0137 training time: 174.54130 
+INFO:tensorflow:Epoch: 0138 training time: 175.73585 
+I1031 15:42:12.981364 140321506309952 train.py:394] Epoch: 0138 training time: 175.73585 
+INFO:tensorflow:Epoch: 0139 training time: 176.93440 
+I1031 15:42:14.180330 140321506309952 train.py:394] Epoch: 0139 training time: 176.93440 
+INFO:tensorflow:Epoch: 0140 training time: 178.15086 
+I1031 15:42:15.397282 140321506309952 train.py:394] Epoch: 0140 training time: 178.15086 
+INFO:tensorflow:Epoch: 0141 training time: 179.39961 
+I1031 15:42:16.646582 140321506309952 train.py:394] Epoch: 0141 training time: 179.39961 
+INFO:tensorflow:Epoch: 0142 training time: 180.65820 
+I1031 15:42:17.905575 140321506309952 train.py:394] Epoch: 0142 training time: 180.65820 
+INFO:tensorflow:Epoch: 0143 training time: 181.88786 
+I1031 15:42:19.135682 140321506309952 train.py:394] Epoch: 0143 training time: 181.88786 
+INFO:tensorflow:Epoch: 0144 training time: 183.10968 
+I1031 15:42:20.357942 140321506309952 train.py:394] Epoch: 0144 training time: 183.10968 
+INFO:tensorflow:Epoch: 0145 training time: 184.35454 
+I1031 15:42:21.603224 140321506309952 train.py:394] Epoch: 0145 training time: 184.35454 
+INFO:tensorflow:Epoch: 0146 training time: 185.63659 
+I1031 15:42:22.885690 140321506309952 train.py:394] Epoch: 0146 training time: 185.63659 
+INFO:tensorflow:Epoch: 0147 training time: 186.91334 
+I1031 15:42:24.162818 140321506309952 train.py:394] Epoch: 0147 training time: 186.91334 
+INFO:tensorflow:Epoch: 0148 training time: 188.17921 
+I1031 15:42:25.429134 140321506309952 train.py:394] Epoch: 0148 training time: 188.17921 

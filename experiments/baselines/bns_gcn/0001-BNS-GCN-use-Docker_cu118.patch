@@ -1,0 +1,24 @@
+From dcd88887a85b91de6efe0dbd1dd37858eaa5e3ab Mon Sep 17 00:00:00 2001
+From: "a.b" <a.b@c>
+Date: Mon, 20 May 2024 16:09:49 +0000
+Subject: [PATCH 1/3] BNS-GCN: use Docker_cu118
+
+---
+ requirements.txt | 5 -----
+ 1 file changed, 5 deletions(-)
+ delete mode 100644 requirements.txt
+
+diff --git a/requirements.txt b/requirements.txt
+deleted file mode 100644
+index 601f900..0000000
+--- a/requirements.txt
++++ /dev/null
+@@ -1,5 +0,0 @@
+---find-links https://download.pytorch.org/whl/torch_stable.html
+---find-links https://data.dgl.ai/wheels/repo.html
+-torch==1.12.0+cu113
+-ogb>=1.3.5
+-dgl-cu113
+-- 
+2.34.1
+

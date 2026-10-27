@@ -1,0 +1,23 @@
+$WHICH_PYTHON -m torch.distributed.run \
+--nproc_per_node $PROC_PER_NODE --nnodes=$N_NODES --node_rank=$NODE_RANK \
+--master_addr $MASTER_ADDR --master_port $MASTER_PORT \
+train/t10n_train.py \
+--data_path $DATA_PATH    \
+--graph_name $GRAPH_NAME   \
+--part_method $PART_METHOD    \
+--n_part $NUM_PART \
+--model $MODEL    \
+--num_layers $N_LAYER  \
+--fan_out $FAN_OUT  \
+--num_epochs $N_EPOCH  \
+--batch_size $BS \
+--batch_size_eval $EVAL_BS \
+--stop_at_border \
+--disable_backup_server \
+--num_gpus $GPU_PER_NODE \
+--backend gloo \
+--log_every 100 \
+--eval_every $N_EVAL \
+--socket_ifname eth0 \
+--close_dd \
+--tag_id $TAG_ID 

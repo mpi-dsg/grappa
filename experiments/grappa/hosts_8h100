@@ -1,0 +1,4 @@
+sws-2h100-01 n_gpu=1
+sws-2h100-02 n_gpu=1
+sws-2h100-03 n_gpu=1
+sws-2h100-04 n_gpu=1

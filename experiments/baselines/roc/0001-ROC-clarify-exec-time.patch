@@ -1,0 +1,77 @@
+From d37a0a734a92f96dcdf8c14330ffa440523430fb Mon Sep 17 00:00:00 2001
+From: "a.b" <a.b@c>
+Date: Mon, 20 May 2024 18:29:04 +0000
+Subject: [PATCH] ROC: clarify exec time
+
+---
+ gnn.cc            | 18 +++++++++++++-----
+ softmax_kernel.cu |  2 ++
+ 2 files changed, 15 insertions(+), 5 deletions(-)
+
+diff --git a/gnn.cc b/gnn.cc
+index 4346145..52c6cfa 100644
+--- a/gnn.cc
++++ b/gnn.cc
+@@ -63,6 +63,8 @@ void top_level_task(const Task *task,
+     assert(config.totalGPUs > 0);
+   }
+   Graph graph(ctx, runtime, config);
++  double ts_point = Realm::Clock::current_time_in_microseconds();
++  printf("ts_point:graph init:s: %.2lf s\n", ts_point/1000.0/1000.0);
+   // Model Construction
+   Model model(graph, ctx, runtime);
+   Tensor input = model.create_node_tensor<DATATYPE>(config.layers[0]);
+@@ -96,19 +98,24 @@ void top_level_task(const Task *task,
+   optimizer->set_weight_decay(config.weight_decay);
+   model.optimizer = optimizer;
+   model.init(config);
++  ts_point = Realm::Clock::current_time_in_microseconds();
++  printf("ts_point: model init:s: %.2lf s\n", ts_point/1000.0/1000.0);
+   for (int i = 0; i < config.numEpochs; i++) {
+-    if ((i != 0) && (i % config.decay_steps == 0))
++    if ((i != 0) && (i % config.decay_steps == 0)){
+       optimizer->alpha *= config.decay_rate;
++    }
+     model.train_mode();
+     model.zero_gradients();
+     model.forward();
+     model.backward();
+     model.update();
+-    if (i % 5 == 0) {
+-      model.infer_mode();
+-      model.forward();
+-    }
+   }
++  //double ts_mid = Realm::Clock::current_time_in_microseconds();
++  //printf("ts_point = all epoch:s: %.2lf s\n", ts_mid/1000.0/1000.0);
++  //if (i % 5 == 0) {
++  model.infer_mode();
++  model.forward();
++  //}
+ }
+ 
+ void parse_input_args(char **argv, int argc, Config& config)
+@@ -797,6 +804,7 @@ Graph::Graph(Context ctx,
+   assert(fread(raw_rows, sizeof(E_ID), (size_t)numNodes, fd) == (size_t)numNodes);
+   for (V_ID v = 1; v < numNodes; v++)
+     assert(raw_rows[v] >= raw_rows[v-1]);
++  log_gnn.print("Load graph: numNodes(%u) numEdges(%zu)", raw_rows[numNodes-1], numEdges);
+   assert(raw_rows[numNodes-1] == numEdges);
+   fclose(fd);
+ 
+diff --git a/softmax_kernel.cu b/softmax_kernel.cu
+index ac6ab14..64194c2 100644
+--- a/softmax_kernel.cu
++++ b/softmax_kernel.cu
+@@ -139,6 +139,8 @@ void SoftmaxCrossEntropy::backward_task(const Task *task,
+     checkCUDA(cudaMemcpy(&perfZC, perf, sizeof(PerfMetrics), cudaMemcpyDeviceToHost));
+     std::string modeInfo = (op->mode == MD_MODE_TRAIN) ? "[TRAIN]" : "	[INFER]";
+     if (op->mode == MD_MODE_INFER) {
++      double ts_point = Realm::Clock::current_time_in_microseconds();
++      printf("ts_point:before infer:s: %.2lf s\n", ts_point/1000.0/1000.0);
+       fprintf(stderr, "%s[%d] train_loss: %.4lf  train_accuracy: %.2lf\%(%d/%d)  val_accuracy: %.2lf\%(%d/%d)  test_accuracy: %.2lf\%(%d/%d)\n",
+               modeInfo.c_str(), op->epoch_num, perfZC.trainLoss,
+               perfZC.trainCorrect * 100.0f / perfZC.trainAll, perfZC.trainCorrect, perfZC.trainAll,
+-- 
+2.34.1
+

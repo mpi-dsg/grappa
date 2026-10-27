@@ -1,0 +1,47 @@
+From de48b94768ba77a6e6845398eaf3893f9ca17a71 Mon Sep 17 00:00:00 2001
+From: "a.b" <a.b@c.com>
+Date: Mon, 20 May 2024 09:33:08 +0000
+Subject: [PATCH 5/7] GAT, GCN: run inference at last epoch
+
+---
+ toolkits/GAT_GPU_DIST.hpp | 6 ++++--
+ toolkits/GCN.hpp          | 6 ++++--
+ 2 files changed, 8 insertions(+), 4 deletions(-)
+
+diff --git a/toolkits/GAT_GPU_DIST.hpp b/toolkits/GAT_GPU_DIST.hpp
+index cae7256..34bf77b 100644
+--- a/toolkits/GAT_GPU_DIST.hpp
++++ b/toolkits/GAT_GPU_DIST.hpp
+@@ -238,8 +238,10 @@ public:
+   //      printf("sizeof %d",sizeof(__m256i));
+ //      printf("sizeof %d",sizeof(int));
+       Test(0);
+-      Test(1);
+-      Test(2);
++      if(i_i == iterations -1){
++      	Test(1);
++      	Test(2);
++      }
+       Loss();
+       
+       ctx->self_backward(true);
+diff --git a/toolkits/GCN.hpp b/toolkits/GCN.hpp
+index 3f83d86..37b5d30 100644
+--- a/toolkits/GCN.hpp
++++ b/toolkits/GCN.hpp
+@@ -251,8 +251,10 @@ public:
+ 
+       Forward();
+       Test(0);
+-      Test(1);
+-      Test(2);
++      if(i_i == iterations -1){
++      	Test(1);
++      	Test(2);
++      }
+       Loss();
+       // Backward();
+       ctx->self_backward(true);
+-- 
+2.34.1
+

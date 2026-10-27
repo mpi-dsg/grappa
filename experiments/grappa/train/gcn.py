@@ -1,0 +1,64 @@
+# ported from dgl/examples
+"""GCN using DGL nn package
+
+References:
+- Semi-Supervised Classification with Graph Convolutional Networks
+- Paper: https://arxiv.org/abs/1609.02907
+- Code: https://github.com/tkipf/gcn
+"""
+
+import dgl.nn.pytorch as dglnn
+import torch.nn as nn
+from contextlib import contextmanager
+
+
+class GCN(nn.Module):
+
+    def __init__(self, in_feats, n_hidden, n_classes, n_layers, activation,
+                 dropout):
+        super(GCN, self).__init__()
+        self.layers = nn.ModuleList()
+        self.n_layers = n_layers
+        self.n_hidden = n_hidden
+        self.n_classes = n_classes
+        # input layer
+        self.layers.append(
+            dglnn.GraphConv(in_feats,
+                            n_hidden,
+                            activation=activation,
+                            allow_zero_in_degree=True))
+        # hidden layers
+        for _ in range(1, n_layers - 1):
+            self.layers.append(
+                dglnn.GraphConv(n_hidden,
+                                n_hidden,
+                                activation=activation,
+                                allow_zero_in_degree=True))
+        # output layer
+        self.layers.append(
+            dglnn.GraphConv(n_hidden, n_classes, allow_zero_in_degree=True))
+        self.dropout = nn.Dropout(p=dropout)
+        self.activation = activation
+
+    def forward(self, blocks, features):
+        # print(blocks[0])
+        # print(blocks[0].ndata)
+        # print(blocks[0].ntypes)
+
+        # print(features)
+        # exit(0)
+
+        h = features
+        for i, layer in enumerate(self.layers):
+            if i != 0:
+                h = self.dropout(h)
+            h = layer(blocks[i], h)
+        return h
+
+    def inference(self, g, x, batch_size, device):
+        pass
+
+    @contextmanager
+    def join(self):
+        """dummy join for standalone"""
+        yield

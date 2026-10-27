@@ -1,0 +1,25 @@
+From a1c4251802505d1647d65f252a8371b8eeaacf4e Mon Sep 17 00:00:00 2001
+From: "a.b" <a.b@c>
+Date: Mon, 20 May 2024 18:35:14 +0000
+Subject: [PATCH 2/3] BNS_GCN: helper: utils.py: add ogbn-arxiv
+
+---
+ helper/utils.py | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/helper/utils.py b/helper/utils.py
+index 2346593..f791a94 100644
+--- a/helper/utils.py
++++ b/helper/utils.py
+@@ -40,6 +40,8 @@ def load_data(args):
+         g = data[0]
+     elif args.dataset == 'ogbn-products':
+         g = load_ogb_dataset('ogbn-products', args.data_path)
++    elif args.dataset == 'ogbn-arxiv':
++        g = load_ogb_dataset('ogbn-arxiv', args.data_path)
+     elif args.dataset == 'ogbn-papers100m':
+         g = load_ogb_dataset('ogbn-papers100M', args.data_path)
+     elif args.dataset == 'yelp':
+-- 
+2.34.1
+

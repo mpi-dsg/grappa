@@ -1,0 +1,1 @@
+python preprocess.py --rootdir $DATA_PATH/ds_ori --graph-as-homogeneous --graph-output-path $DATA_PATH/dgl/mag240m/mag --author-output-path $DATA_PATH/dgl/mag240m/author/output --inst-output-path $DATA_PATH/dgl/mag240m/inst/output --full-output-path $DATA_PATH/dgl/mag240m/full/output

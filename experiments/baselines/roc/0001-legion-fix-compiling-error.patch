@@ -1,0 +1,45 @@
+From 84901c6de8f86ff719e1844fb98ceace7fd2812c Mon Sep 17 00:00:00 2001
+From: "a.b" <a.b@c>
+Date: Mon, 20 May 2024 15:28:55 +0000
+Subject: [PATCH] legion: fix compiling error
+
+---
+ runtime/realm/cuda/cudart_hijack.cc | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/runtime/realm/cuda/cudart_hijack.cc b/runtime/realm/cuda/cudart_hijack.cc
+index f7e0ddfe9..4daf80bdd 100644
+--- a/runtime/realm/cuda/cudart_hijack.cc
++++ b/runtime/realm/cuda/cudart_hijack.cc
+@@ -403,23 +403,23 @@ namespace Realm {
+ 					(CUdeviceptr)ptr) );
+ 
+ 	if(managed) {
+-	  attr->memoryType = cudaMemoryTypeDevice;
++	//  attr->memoryType = cudaMemoryTypeDevice;
+ #if CUDART_VERSION >= 10000
+ 	  attr->type = cudaMemoryTypeManaged;
+ #endif
+-	  attr->isManaged = 1;
++	  //attr->isManaged = 1;
+ 	} else {
+-	  attr->isManaged = 0;
++	  //attr->isManaged = 0;
+ 	  switch(mtype) {
+ 	  case CU_MEMORYTYPE_HOST: {
+-	    attr->memoryType = cudaMemoryTypeHost;
++	    //attr->memoryType = cudaMemoryTypeHost;
+ #if CUDART_VERSION >= 10000
+ 	    attr->type = cudaMemoryTypeHost;
+ #endif
+ 	    break;
+ 	  }
+ 	  case CU_MEMORYTYPE_DEVICE: {
+-	    attr->memoryType = cudaMemoryTypeDevice;
++	    //attr->memoryType = cudaMemoryTypeDevice;
+ #if CUDART_VERSION >= 10000
+ 	    attr->type = cudaMemoryTypeDevice;
+ #endif
+-- 
+2.34.1
+

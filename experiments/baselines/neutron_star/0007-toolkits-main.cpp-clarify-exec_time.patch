@@ -1,0 +1,57 @@
+From 09fc34df705d20f1f01c4fa34d3851d6002484ae Mon Sep 17 00:00:00 2001
+From: "a.b" <a.b@c>
+Date: Mon, 20 May 2024 18:17:28 +0000
+Subject: [PATCH 7/7] toolkits: main.cpp: clarify exec_time
+
+---
+ toolkits/GAT_GPU_DIST.hpp | 4 ++++
+ toolkits/GCN.hpp          | 4 ++++
+ toolkits/main.cpp         | 2 +-
+ 3 files changed, 9 insertions(+), 1 deletion(-)
+
+diff --git a/toolkits/GAT_GPU_DIST.hpp b/toolkits/GAT_GPU_DIST.hpp
+index 34bf77b..a31c84d 100644
+--- a/toolkits/GAT_GPU_DIST.hpp
++++ b/toolkits/GAT_GPU_DIST.hpp
+@@ -239,6 +239,10 @@ public:
+ //      printf("sizeof %d",sizeof(int));
+       Test(0);
+       if(i_i == iterations -1){
++  	exec_time += get_time();
++  	if (graph->partition_id == 0) {
++    	  printf("train_time=%lf (no inference included)\n", exec_time);
++  	}
+       	Test(1);
+       	Test(2);
+       }
+diff --git a/toolkits/GCN.hpp b/toolkits/GCN.hpp
+index 37b5d30..fd1df95 100644
+--- a/toolkits/GCN.hpp
++++ b/toolkits/GCN.hpp
+@@ -252,6 +252,10 @@ public:
+       Forward();
+       Test(0);
+       if(i_i == iterations -1){
++  	exec_time += get_time();
++  	if (graph->partition_id == 0) {
++    	  printf("train_time=%lf (no inference included)\n", exec_time);
++  	}
+       	Test(1);
+       	Test(2);
+       }
+diff --git a/toolkits/main.cpp b/toolkits/main.cpp
+index 2034a70..99ce390 100644
+--- a/toolkits/main.cpp
++++ b/toolkits/main.cpp
+@@ -189,7 +189,7 @@ int main(int argc, char **argv) {
+ #endif
+   exec_time += get_time();
+   if (graph->partition_id == 0) {
+-    printf("exec_time=%lf(s)\n", exec_time);
++    printf("exec_time=%lf(s) (1 inference included)\n", exec_time);
+   }
+ 
+   delete graph;
+-- 
+2.34.1
+

@@ -1,0 +1,71 @@
+From 1e418ab6c7c329e63d9f708568adc03274ecad07 Mon Sep 17 00:00:00 2001
+From: "a.b" <a.b@c>
+Date: Mon, 20 May 2024 16:14:55 +0000
+Subject: [PATCH 3/3] BNS-GCN: add wall time
+
+---
+ helper/parser.py |  1 +
+ train.py         | 11 ++++++++---
+ 2 files changed, 9 insertions(+), 3 deletions(-)
+
+diff --git a/helper/parser.py b/helper/parser.py
+index 59a99c1..3acce4f 100644
+--- a/helper/parser.py
++++ b/helper/parser.py
+@@ -57,5 +57,6 @@ def create_parser():
+                         help="enable evaluation")
+     parser.add_argument('--no-eval', action='store_false', dest='eval',
+                         help="disable evaluation")
++    parser.add_argument("--run_idx", type=int, default=0)
+     parser.set_defaults(eval=True)
+     return parser.parse_args()
+diff --git a/train.py b/train.py
+index 62a511e..2e990b1 100644
+--- a/train.py
++++ b/train.py
+@@ -353,7 +353,7 @@ def run(graph, node_dict, gpb, args):
+ 
+     best_model, best_acc = None, 0
+ 
+-    result_file_name = 'results/%s_n%d_p%.2f.txt' % (args.dataset, args.n_partitions, args.sampling_rate)
++    result_file_name = '/workspace/t10n/exp/bns_gcn/t10n_baseline/log/trainpy_bnsgcn_%s_%s_%d_%d_R%d_0_%.2f.txt' % (args.dataset, args.model, args.n_layers, args.n_partitions, args.run_idx, args.sampling_rate)
+ 
+     if args.dataset == 'yelp':
+         loss_fcn = torch.nn.BCEWithLogitsLoss(reduction='sum')
+@@ -382,6 +382,7 @@ def run(graph, node_dict, gpb, args):
+     del graph
+     del node_dict
+ 
++    wall_start = time.time()
+     for epoch in range(args.n_epochs):
+ 
+         t0 = time.time()
+@@ -425,7 +426,7 @@ def run(graph, node_dict, gpb, args):
+         comm_timer.clear()
+ 
+         if args.eval and rank == 0 and (epoch + 1) % args.log_every == 0:
+-            torch.save(model.state_dict(), 'checkpoint/%s_p%.2f_%d.pth.tar' % (args.graph_name, args.sampling_rate, epoch))
++            #torch.save(model.state_dict(), 'checkpoint/%s_p%.2f_%d.pth.tar' % (args.graph_name, args.sampling_rate, epoch))
+             if thread is not None:
+                 model_copy, val_acc = thread.get()
+                 if val_acc > best_acc:
+@@ -449,11 +450,15 @@ def run(graph, node_dict, gpb, args):
+             if val_acc > best_acc:
+                 best_acc = val_acc
+                 best_model = model_copy
+-        torch.save(best_model.state_dict(), 'checkpoint/' + args.graph_name + '_final.pth.tar')
++        #torch.save(best_model.state_dict(), 'checkpoint/' + args.graph_name + '_final.pth.tar')
+         print('model saved')
+         print("Max Validation Accuracy {:.2%}".format(best_acc))
+         best_model.cpu()
+         _, acc = evaluate_induc('Test Result', best_model, test_g, 'test')
++ 
++    wall_end = time.time()
++    if rank == 0:
++        print(f"Training wall time (log_every={args.log_every}): {wall_end - wall_start: .4f} seconds")
+ 
+ 
+ def init_processes(rank, size, args):
+-- 
+2.34.1
+

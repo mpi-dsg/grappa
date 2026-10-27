@@ -1,0 +1,40 @@
+From 11db548f566f1b5420bbc5a674b6a8864185872b Mon Sep 17 00:00:00 2001
+From: "a.b" <a.b@c.com>
+Date: Mon, 20 May 2024 09:27:45 +0000
+Subject: [PATCH 4/7] main.cpp: accounting train time
+
+---
+ toolkits/main.cpp | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/toolkits/main.cpp b/toolkits/main.cpp
+index 331a6a5..2034a70 100644
+--- a/toolkits/main.cpp
++++ b/toolkits/main.cpp
+@@ -39,7 +39,6 @@ int main(int argc, char **argv) {
+   }
+ 
+   double exec_time = 0;
+-  exec_time -= get_time();
+ 
+   Graph<Empty> *graph;
+   graph = new Graph<Empty>();
+@@ -131,6 +130,7 @@ int main(int argc, char **argv) {
+     GAT_GPU_DIST_impl *ntsGAT = new GAT_GPU_DIST_impl(graph, iterations);
+     ntsGAT->init_graph();
+     ntsGAT->init_nn();
++    exec_time -= get_time();
+     ntsGAT->run();
+     } else if (graph->config->algorithm == std::string("COMMNETGPU")) {
+     graph->load_directed(graph->config->edge_file, graph->config->vertices);
+@@ -152,6 +152,7 @@ int main(int argc, char **argv) {
+     GCN_impl *ntsGCN = new GCN_impl(graph, iterations);
+     ntsGCN->init_graph();
+     ntsGCN->init_nn();
++    exec_time -= get_time();
+     ntsGCN->run();
+     // GCN(graph, iterations);
+   } else if (graph->config->algorithm == std::string("GCNEAGER")) {
+-- 
+2.34.1
+

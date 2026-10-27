@@ -1,0 +1,39 @@
+From 0a157264f4d9fee654918c73d8839bf7b1f55a89 Mon Sep 17 00:00:00 2001
+From: "a.b" <a.b@c.com>
+Date: Mon, 20 May 2024 09:07:15 +0000
+Subject: [PATCH 1/7] fix compiling error
+
+---
+ CMakeLists.txt   | 2 +-
+ cuda/cuda_type.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index c274ce3..4584885 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -4,7 +4,7 @@ add_definitions(-w)
+ set(CMAKE_CUDA_COMPILER /usr/local/cuda/bin/nvcc)
+ # please change this to the path where you put libtorch
+ # TODO: torch path should not hard coded in cmake file
+-list(APPEND CMAKE_PREFIX_PATH "./GPU_libtorch/libtorch-1-9/libtorch/")
++list(APPEND CMAKE_PREFIX_PATH "./libtorch/")
+ 
+ project(GNNmini)
+ set(ENV{LANG} "C")
+diff --git a/cuda/cuda_type.h b/cuda/cuda_type.h
+index 5bba329..cf41e7d 100644
+--- a/cuda/cuda_type.h
++++ b/cuda/cuda_type.h
+@@ -17,7 +17,7 @@
+ #ifdef __cplusplus
+ extern "C" {
+ #endif
+-// #define CUDA_ENABLE 1
++#define CUDA_ENABLE 1
+ typedef uint32_t VertexId_CUDA;
+ const int CUDA_NUM_THREADS = 512;
+ const int CUDA_NUM_BLOCKS = 128;
+-- 
+2.34.1
+
